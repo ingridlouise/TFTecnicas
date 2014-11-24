@@ -5,7 +5,6 @@
  */
 package GUI;
 
-import Negocio.Filme;
 import com.omertron.themoviedbapi.model.MovieDb;
 import java.util.List;
 import javax.swing.ComboBoxModel;

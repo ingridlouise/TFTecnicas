@@ -11,18 +11,12 @@ import Negocio.FachadaSessao;
 import Negocio.Filme;
 import Negocio.FilmeDAO;
 import Negocio.Horario;
-import Negocio.Ingresso;
 import Negocio.Sala;
 import Negocio.Sessao;
 import Persistencia.HorarioDAODerby;
 import Persistencia.SalaDAODerby;
-import com.omertron.themoviedbapi.TheMovieDbApi;
-import com.omertron.themoviedbapi.model.MovieDb;
 import static java.awt.image.ImageObserver.WIDTH;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.sql.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,7 +28,7 @@ import javax.swing.JOptionPane;
  */
 public class GerenciarSessoes extends javax.swing.JFrame {
 
-    private static TheMovieDbApi tmdb;
+   
     String chave = "7f33d776068a7e8045c703100347fd69";
     MyComboModelFilme comboFilmes;
     MyComboModelSalas comboSalas;
@@ -178,10 +172,7 @@ public class GerenciarSessoes extends javax.swing.JFrame {
 
     private void btnAdicionarSessaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarSessaoActionPerformed
         double valorIngresso = 15.90;
-        java.util.Date utilDate = null;
-        Date dataSessao = null;
-       
-      
+           
         if (ddlFilmes != null && ddlSala != null && ddlHorario != null && txtData.getText() != "") {
             
             Filme filmeSelecionado = comboFilmes.getInfosFilme(ddlFilmes.getSelectedIndex());
