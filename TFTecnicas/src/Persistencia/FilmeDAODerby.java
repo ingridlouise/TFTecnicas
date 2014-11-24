@@ -29,7 +29,7 @@ public class FilmeDAODerby implements FilmeDAO {
     @Override
     public void addFilme(Filme filme) throws Exception{
         //String sql = "insert into FILMES (ID, NOME, CARTAZ, ANOLANCAMENTO, SINOPSE, DIRETOR, ATORES) values (?,?,?,?,?,?,?)";
-        String sql = "insert into FILMES (ID, NOME, CARTAZ, ANOLANCAMENTO, SINOPSE, DIRETOR, ATORES) values (?,?,?,?,?,?,?)";
+        String sql = "insert into USUARIO.FILMES (ID, NOME, CARTAZ, ANOLANCAMENTO, SINOPSE, DIRETOR, ATORES) values (?,?,?,?,?,?,?)";
         int resultado = 0;
         try (Connection conexao = InicializadorBancoDados.conectarBd()) {
             try (PreparedStatement comando = conexao.prepareStatement(sql)) {
@@ -61,7 +61,7 @@ public class FilmeDAODerby implements FilmeDAO {
     @Override
     public List<Filme> buscarTodos() {
         List<Filme> filmes = new ArrayList<>();
-        String sql = "select * from filmes";
+        String sql = "select * from USUARIO.FILMES";
         try (Connection conexao = InicializadorBancoDados.conectarBd()) {
             try (Statement comando = conexao.createStatement()) {
                 try (ResultSet resultado = comando.executeQuery(sql)) {

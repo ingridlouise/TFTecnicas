@@ -301,7 +301,7 @@ public class InterfaceGerente extends javax.swing.JFrame {
             txtNomeFilme.setText(filmeSelecionado.getTitle());
             txtAnoLancamento.setText(filmeSelecionado.getReleaseDate().substring(0, Math.min(filmeSelecionado.getReleaseDate().length(), 4)));
             txtSinopse.setText(filmeSelecionado.getOverview());
-            
+
             try {
                 List<Person> atores = fachada.getAtores(filmeSelecionado.getId());
                 String nomesAtores = "";
@@ -356,6 +356,7 @@ public class InterfaceGerente extends javax.swing.JFrame {
         catch (FachadaServicoTmdbException ex) {
             JOptionPane.showMessageDialog(null, "Filme não encontrado", "Erro", WIDTH, null);
         }
+        
     }//GEN-LAST:event_btnBuscaFilmeActionPerformed
 
     private void ddlFilmesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ddlFilmesActionPerformed

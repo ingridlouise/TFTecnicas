@@ -29,13 +29,13 @@ public class SalaDAODerby implements SalaDAO {
     @Override
     public List<Sala> getSalas() {
         List<Sala> salas = new ArrayList<>();
-        String sql = "select * from salas";
+        String sql = "select * from USUARIO.SALAS";
         try (Connection conexao = InicializadorBancoDados.conectarBd()) {
             try (Statement comando = conexao.createStatement()) {
                 try (ResultSet resultado = comando.executeQuery(sql)) {
                     while (resultado.next()) {
-                        Sala sala = new Sala(
-                                resultado.getInt("capacidade"));
+                        Sala sala = new Sala(resultado.getInt("ID"),
+                                resultado.getInt("CAPACIDADE"));
                         salas.add(sala);
                     }
                     return salas;

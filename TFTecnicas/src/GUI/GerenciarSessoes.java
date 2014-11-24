@@ -10,9 +10,14 @@ import Negocio.FachadaServicoTmdb;
 import Negocio.FachadaServicoTmdbException;
 import Negocio.Filme;
 import Negocio.FilmeDAO;
+import Negocio.Horario;
+import Negocio.HorarioDAO;
 import Negocio.Sala;
 import Negocio.SalaDAO;
+import Persistencia.HorarioDAODerby;
+import Persistencia.SalaDAODerby;
 import com.omertron.themoviedbapi.TheMovieDbApi;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,7 +33,8 @@ public class GerenciarSessoes extends javax.swing.JFrame {
     MyComboModelMovieDB comboFilmes;
     FachadaServicoTmdb fachada;
     FilmeDAO filmeDAOFilmes;
-    SalaDAO salaDAOFilmes;
+    SalaDAODerby salaDAOFilmes = new SalaDAODerby();
+    HorarioDAODerby horarioDAOFilmes = new HorarioDAODerby();
     
     public GerenciarSessoes() throws FachadaServicoTmdbException {
         initComponents();
@@ -44,42 +50,42 @@ public class GerenciarSessoes extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnInfoFilme = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
-        jComboBox2 = new javax.swing.JComboBox();
-        jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jComboBox3 = new javax.swing.JComboBox();
+        btnAdicionarSessao = new javax.swing.JButton();
+        lblSala = new javax.swing.JLabel();
+        lblHorario = new javax.swing.JLabel();
+        ddlSala = new javax.swing.JComboBox();
+        ddlHorario = new javax.swing.JComboBox();
+        lblFilme = new javax.swing.JLabel();
+        btnInfoFilmes = new javax.swing.JButton();
+        ddlFilmes = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        btnInfoFilme.setText("Adicionar Sessão");
-        btnInfoFilme.addActionListener(new java.awt.event.ActionListener() {
+        btnAdicionarSessao.setText("Adicionar Sessão");
+        btnAdicionarSessao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInfoFilmeActionPerformed(evt);
+                btnAdicionarSessaoActionPerformed(evt);
             }
         });
 
-        jLabel1.setText("Sala");
+        lblSala.setText("Sala");
 
-        jLabel2.setText("Horário");
+        lblHorario.setText("Horário");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ddlSala.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ddlHorario.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jLabel3.setText("Selecionar o Filme:");
+        lblFilme.setText("Selecionar o Filme:");
 
-        jButton1.setText("Carregar Informaçõesde Filmes");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnInfoFilmes.setText("Carregar Informações de Filmes");
+        btnInfoFilmes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnInfoFilmesActionPerformed(evt);
             }
         });
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ddlFilmes.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -89,59 +95,64 @@ public class GerenciarSessoes extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 12, Short.MAX_VALUE)
-                        .addComponent(jLabel3)
+                        .addComponent(lblFilme)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
+                                .addComponent(lblSala)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(ddlSala, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(56, 56, 56)
-                                .addComponent(jLabel2)
+                                .addComponent(lblHorario)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(ddlHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(ddlFilmes, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnInfoFilme)
+                        .addComponent(btnAdicionarSessao)
                         .addGap(247, 247, 247)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(191, 191, 191)
-                .addComponent(jButton1)
+                .addComponent(btnInfoFilmes)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(15, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnInfoFilmes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblFilme)
+                    .addComponent(ddlFilmes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblSala)
+                    .addComponent(lblHorario)
+                    .addComponent(ddlSala, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ddlHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(btnInfoFilme)
+                .addComponent(btnAdicionarSessao)
                 .addGap(25, 25, 25))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnInfoFilmeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoFilmeActionPerformed
+    private void btnAdicionarSessaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarSessaoActionPerformed
         
-    }//GEN-LAST:event_btnInfoFilmeActionPerformed
+    }//GEN-LAST:event_btnAdicionarSessaoActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnInfoFilmesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoFilmesActionPerformed
         MyComboModelFilme comboFilmes;
         MyComboModelSalas comboSalas;
+        MyComboModelHorarios comboHorarios;
         List<Filme> filmes = fachada.getFilmes();
+        List<Sala> salas = new ArrayList<>();
+        salas = salaDAOFilmes.getSalas();
+        List<Horario> horarios = new ArrayList<>();
+        horarios = horarioDAOFilmes.getHorarios();
         /*
         List<Sala> salas = fachada.getSalas();
         
@@ -157,10 +168,16 @@ public class GerenciarSessoes extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Nenhum filme encontrado", "Erro", WIDTH, null);
         }else{
             comboFilmes = new MyComboModelFilme(filmes);
-            jComboBox3.removeAllItems();
-            jComboBox3.setModel(comboFilmes);
+            ddlFilmes.removeAllItems();
+            ddlFilmes.setModel(comboFilmes);
+            comboSalas = new MyComboModelSalas(salas);
+            ddlSala.removeAllItems();
+            ddlSala.setModel(comboSalas);
+            comboHorarios = new MyComboModelHorarios(horarios);
+            ddlHorario.removeAllItems();
+            ddlHorario.setModel(comboHorarios);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnInfoFilmesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -202,13 +219,13 @@ public class GerenciarSessoes extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnInfoFilme;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
-    private javax.swing.JComboBox jComboBox3;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JButton btnAdicionarSessao;
+    private javax.swing.JButton btnInfoFilmes;
+    private javax.swing.JComboBox ddlFilmes;
+    private javax.swing.JComboBox ddlHorario;
+    private javax.swing.JComboBox ddlSala;
+    private javax.swing.JLabel lblFilme;
+    private javax.swing.JLabel lblHorario;
+    private javax.swing.JLabel lblSala;
     // End of variables declaration//GEN-END:variables
 }

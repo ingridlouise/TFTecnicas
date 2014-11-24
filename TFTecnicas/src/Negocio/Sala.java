@@ -11,13 +11,19 @@ package Negocio;
 public class Sala {
     
     private int capacidade;
+    private int id;
 
-    public Sala(int capacidade) {
+    public Sala(int id, int capacidade) {
         this.capacidade = capacidade;
+        this.id = id;
     }
 
     public int getCapacidade() {
         return capacidade;
+    }
+    
+    public int getId(){
+        return id;
     }
 
     public void setCapacidade(int capacidade) {

@@ -5,10 +5,12 @@
  */
 package Negocio;
 
+import java.util.List;
+
 /**
  *
  * @author ingridlouisepanizzirodrigues
  */
-public class HorarioDAO {
-    
+public interface HorarioDAO {
+     public List<Horario> getHorarios();
 }

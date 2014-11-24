@@ -1,7 +1,9 @@
 package Negocio;
 
 import Persistencia.FilmeDAODerby;
+import Persistencia.HorarioDAODerby;
 import Persistencia.SalaDAODerby;
+import Persistencia.SessaoDAODerby;
 import com.omertron.themoviedbapi.MovieDbException;
 import com.omertron.themoviedbapi.TheMovieDbApi;
 import com.omertron.themoviedbapi.model.MovieDb;
@@ -14,6 +16,8 @@ public class FachadaServicoTmdb {
     private TheMovieDbApi tmdb;
     private FilmeDAODerby filme;
     private SalaDAODerby sala;
+    private HorarioDAODerby horario;
+    private SessaoDAODerby sessao;
     
     public FachadaServicoTmdb(String chaveAcesso) throws FachadaServicoTmdbException{
         this.chaveAcesso = chaveAcesso;
@@ -50,9 +54,17 @@ public class FachadaServicoTmdb {
         return lista;
     }
     
-    public List<Sala> getSalas() {
-        List<Sala> lista;
-        lista = sala.getSalas();
-        return lista;
-    }
+//    public List<Sala> getSalas() {
+//        List<Sala> lista;
+//        lista = sala.getSalas();
+//        return lista;
+//    }
+//    
+//    public List<Horario> getHorarios() {
+//        List<Horario> lista;
+//        lista = horario.getHorarios();
+//        return lista;
+//    }
+    
+    
 }

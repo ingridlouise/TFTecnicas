@@ -22,6 +22,8 @@ public class MyComboModelSalas implements ComboBoxModel<String> {
         comboSalas = lista;
         StringBuilder sb = new StringBuilder();
         sb.append("");
+        sb.append(lista.get(0).getId());
+        sb.append("-");
         sb.append(lista.get(0).getCapacidade());
         String strI = sb.toString();        
         itemSelecionado = strI;
@@ -50,6 +52,8 @@ public class MyComboModelSalas implements ComboBoxModel<String> {
     public String getElementAt(int index) {
         StringBuilder sb = new StringBuilder();
         sb.append("");
+        sb.append(comboSalas.get(index).getId());
+        sb.append("-");
         sb.append(comboSalas.get(index).getCapacidade());
         String strI = sb.toString();
         return strI;
