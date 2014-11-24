@@ -5,10 +5,13 @@
  */
 package Negocio;
 
+import java.util.List;
+
 /**
  *
  * @author ingridlouisepanizzirodrigues
  */
-public class DAOFilme {
-    
+public interface FilmeDAO {
+    public void addFilme (Filme filme) throws Exception;
+    public List<Filme> buscarTodos();
 }

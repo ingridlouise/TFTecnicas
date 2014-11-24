@@ -17,9 +17,9 @@ public class Filme {
     private String diretor;
     private String sinopse;
     private String poster;
-    private List<Ator> atores;
+    private String[] atores;
 
-    public Filme(long id, String nome, int anoLancamento, String diretor, String sinopse, String poster, List<Ator> atores) {
+    public Filme(long id, String nome, int anoLancamento, String diretor, String sinopse, String poster, String[] atores) {
         this.id = id;
         this.nome = nome;
         this.anoLancamento = anoLancamento;
@@ -78,11 +78,11 @@ public class Filme {
         this.poster = poster;
     }
 
-    public List<Ator> getAtores() {
+    public String[] getAtores() {
         return atores;
     }
 
-    public void setAtores(List<Ator> atores) {
+    public void setAtores(String[] atores) {
         this.atores = atores;
     }
 

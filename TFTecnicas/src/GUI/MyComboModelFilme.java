@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import Negocio.Filme;
 import com.omertron.themoviedbapi.model.MovieDb;
 import java.util.List;
 import javax.swing.ComboBoxModel;
@@ -14,16 +15,16 @@ import javax.swing.event.ListDataListener;
  *
  * @author ingridlouisepanizzirodrigues
  */
-public class MyComboModel implements ComboBoxModel<String> {
-    List<MovieDb> comboFilmes;
+public class MyComboModelFilme implements ComboBoxModel<String> {
+    List<Filme> comboFilmes;
     String itemSelecionado;
     
-    public MyComboModel (List<MovieDb> lista) {
+    public MyComboModelFilme (List<Filme> lista) {
         comboFilmes = lista;
-        itemSelecionado = lista.get(0).getTitle();
+        itemSelecionado = lista.get(0).getNome();
     }
     
-    public MovieDb getInfosFilme (int index){
+    public Filme getInfosFilme (int index){
         return comboFilmes.get(index);
     }
     
@@ -44,7 +45,7 @@ public class MyComboModel implements ComboBoxModel<String> {
 
     @Override
     public String getElementAt(int index) {
-        return comboFilmes.get(index).getTitle();
+        return comboFilmes.get(index).getNome();
     }
 
     @Override

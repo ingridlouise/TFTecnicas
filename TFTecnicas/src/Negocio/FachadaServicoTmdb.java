@@ -1,5 +1,7 @@
 package Negocio;
 
+import Persistencia.FilmeDAODerby;
+import Persistencia.SalaDAODerby;
 import com.omertron.themoviedbapi.MovieDbException;
 import com.omertron.themoviedbapi.TheMovieDbApi;
 import com.omertron.themoviedbapi.model.MovieDb;
@@ -10,10 +12,12 @@ import java.util.List;
 public class FachadaServicoTmdb {
     private String chaveAcesso;
     private TheMovieDbApi tmdb;
-    
+    private FilmeDAODerby filme;
+    private SalaDAODerby sala;
     
     public FachadaServicoTmdb(String chaveAcesso) throws FachadaServicoTmdbException{
         this.chaveAcesso = chaveAcesso;
+        filme = new FilmeDAODerby();
         try {
             tmdb = new TheMovieDbApi(chaveAcesso);
         } catch (MovieDbException ex) {
@@ -34,5 +38,21 @@ public class FachadaServicoTmdb {
         TmdbResultsList<Person> lista;
         lista = tmdb.getMovieCasts(idFilme, (String)null);
         return lista.getResults();
+    }
+    
+    public void addFilme(Filme filmeSelecionado) throws Exception{
+        filme.addFilme(filmeSelecionado);
+    }
+    
+    public List<Filme> getFilmes() {
+        List<Filme> lista;
+        lista = filme.buscarTodos();
+        return lista;
+    }
+    
+    public List<Sala> getSalas() {
+        List<Sala> lista;
+        lista = sala.getSalas();
+        return lista;
     }
 }

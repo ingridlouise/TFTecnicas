@@ -8,10 +8,12 @@ package GUI;
 
 import Negocio.FachadaServicoTmdb;
 import Negocio.FachadaServicoTmdbException;
+import Negocio.Filme;
 import com.omertron.themoviedbapi.MovieDbException;
 import com.omertron.themoviedbapi.TheMovieDbApi;
 import com.omertron.themoviedbapi.model.MovieDb;
 import com.omertron.themoviedbapi.model.Person;
+import com.omertron.themoviedbapi.model.PersonCast;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.HeadlessException;
@@ -35,7 +37,7 @@ import javax.swing.JOptionPane;
 public class InterfaceGerente extends javax.swing.JFrame {
     private static TheMovieDbApi tmdb;
     String chave = "7f33d776068a7e8045c703100347fd69";
-    MyComboModel comboFilmes;
+    MyComboModelMovieDB comboFilmes;
     FachadaServicoTmdb fachada;
     
     public InterfaceGerente() throws FachadaServicoTmdbException {
@@ -238,6 +240,11 @@ public class InterfaceGerente extends javax.swing.JFrame {
         );
 
         btnAdicionaSessao.setText("Adicionar Sessão");
+        btnAdicionaSessao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionaSessaoActionPerformed(evt);
+            }
+        });
 
         btnAdicionaFilme.setText("Adicionar Filme");
         btnAdicionaFilme.addActionListener(new java.awt.event.ActionListener() {
@@ -277,11 +284,11 @@ public class InterfaceGerente extends javax.swing.JFrame {
                         .addGap(25, 25, 25)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAdicionaFilme)
                     .addComponent(btnAdicionaSessao))
-                .addGap(34, 34, 34))
+                .addContainerGap())
         );
 
         pack();
@@ -341,7 +348,7 @@ public class InterfaceGerente extends javax.swing.JFrame {
             if(filmes.isEmpty()){
                 JOptionPane.showMessageDialog(null, "Nenhum filme encontrado", "Erro", WIDTH, null);
             }else{
-                comboFilmes = new MyComboModel(filmes);
+                comboFilmes = new MyComboModelMovieDB(filmes);
                 ddlFilmes.removeAllItems();
                 ddlFilmes.setModel(comboFilmes);
             }
@@ -368,8 +375,35 @@ public class InterfaceGerente extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNomeFilmeActionPerformed
 
     private void btnAdicionaFilmeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionaFilmeActionPerformed
-        // TODO add your handling code here:
+        if(comboFilmes != null){
+            MovieDb filmeSelecionado = comboFilmes.getInfosFilme(ddlFilmes.getSelectedIndex());
+            int idFilme = filmeSelecionado.getId();
+            String nomeFilme = txtNomeFilme.getText();
+            String posterFilme = filmeSelecionado.getPosterPath();
+            int anoFilme = Integer.parseInt(txtAnoLancamento.getText());
+            String sinopseFilme = txtSinopse.getText();
+            String diretorFilme = txtDiretor.getText();
+            String[] atoresFilme = txtAtores.getText().split("\n");
+            Filme filme = new Filme(idFilme, nomeFilme, anoFilme, diretorFilme, sinopseFilme, posterFilme, atoresFilme);
+            try {
+                fachada.addFilme(filme);
+            } catch (Exception ex) {
+                Logger.getLogger(InterfaceGerente.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Nenhum filme selecionado", "Erro", WIDTH, null);
+        }
     }//GEN-LAST:event_btnAdicionaFilmeActionPerformed
+
+    private void btnAdicionaSessaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionaSessaoActionPerformed
+        GerenciarSessoes sessoes = null;
+        try {
+            sessoes = new GerenciarSessoes();
+        } catch (FachadaServicoTmdbException ex) {
+            Logger.getLogger(InterfaceGerente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        sessoes.setVisible(true);
+    }//GEN-LAST:event_btnAdicionaSessaoActionPerformed
 
     
     /**

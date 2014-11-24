@@ -69,10 +69,4 @@ public class Sessao {
     public String toString() {
         return "Sessao{" + "filme=" + filme + ", sala=" + sala + ", dia=" + dia + ", horario=" + horario + ", valorIntegral=" + valorIntegral + '}';
     }
-    
-
-
-   
-    
-    
 }

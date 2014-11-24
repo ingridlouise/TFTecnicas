@@ -3,19 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package Persistencia;
 
-package Negocio;
+import Negocio.Sessao;
+import Negocio.SessaoDAO;
 
 /**
  *
- * @author Marcos
+ * @author ingridlouisepanizzirodrigues
  */
-public class DAOFilmesException extends Exception {
-    public DAOFilmesException(){
-        super();
+
+public class SessaoDAODerby implements SessaoDAO {
+    public SessaoDAODerby(){
+        
     }
-    
-    public DAOFilmesException(String falha_na_busca, Exception e) {
+
+    @Override
+    public void addSessao(Sessao sessao) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
