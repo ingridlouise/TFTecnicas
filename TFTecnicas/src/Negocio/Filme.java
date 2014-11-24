@@ -12,14 +12,14 @@ import java.util.List;
  */
 public class Filme {
     private String nome;
-    private long id;
+    private int id;
     private int anoLancamento;
     private String diretor;
     private String sinopse;
     private String poster;
     private String[] atores;
 
-    public Filme(long id, String nome, int anoLancamento, String diretor, String sinopse, String poster, String[] atores) {
+    public Filme(int id, String nome, int anoLancamento, String diretor, String sinopse, String poster, String[] atores) {
         this.id = id;
         this.nome = nome;
         this.anoLancamento = anoLancamento;
@@ -29,11 +29,11 @@ public class Filme {
         this.atores = atores;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
     

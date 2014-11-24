@@ -1,9 +1,6 @@
 package Negocio;
 
 import Persistencia.FilmeDAODerby;
-import Persistencia.HorarioDAODerby;
-import Persistencia.SalaDAODerby;
-import Persistencia.SessaoDAODerby;
 import com.omertron.themoviedbapi.MovieDbException;
 import com.omertron.themoviedbapi.TheMovieDbApi;
 import com.omertron.themoviedbapi.model.MovieDb;
@@ -12,14 +9,12 @@ import com.omertron.themoviedbapi.results.TmdbResultsList;
 import java.util.List;
 
 public class FachadaServicoTmdb {
+
     private String chaveAcesso;
     private TheMovieDbApi tmdb;
     private FilmeDAODerby filme;
-    private SalaDAODerby sala;
-    private HorarioDAODerby horario;
-    private SessaoDAODerby sessao;
-    
-    public FachadaServicoTmdb(String chaveAcesso) throws FachadaServicoTmdbException{
+
+    public FachadaServicoTmdb(String chaveAcesso) throws FachadaServicoTmdbException {
         this.chaveAcesso = chaveAcesso;
         filme = new FilmeDAODerby();
         try {
@@ -28,8 +23,8 @@ public class FachadaServicoTmdb {
             throw new FachadaServicoTmdbException("Erro de inicialização da fachada de acesso ao TMDB;", ex);
         }
     }
-      
-    public List<MovieDb> buscarFilmesPorNome (String nome) throws FachadaServicoTmdbException{
+
+    public List<MovieDb> buscarFilmesPorNome(String nome) throws FachadaServicoTmdbException {
         try {
             TmdbResultsList<MovieDb> filmes = tmdb.searchMovie(nome, 0, "", true, 0);
             return filmes.getResults();
@@ -37,34 +32,20 @@ public class FachadaServicoTmdb {
             throw new FachadaServicoTmdbException("Falha na busca por filmes.", ex);
         }
     }
-    
-    public List<Person> getAtores(int idFilme) throws MovieDbException{
+
+    public List<Person> getAtores(int idFilme) throws MovieDbException {
         TmdbResultsList<Person> lista;
-        lista = tmdb.getMovieCasts(idFilme, (String)null);
+        lista = tmdb.getMovieCasts(idFilme, (String) null);
         return lista.getResults();
     }
-    
-    public void addFilme(Filme filmeSelecionado) throws Exception{
+
+    public void addFilme(Filme filmeSelecionado) throws Exception {
         filme.addFilme(filmeSelecionado);
     }
-    
+
     public List<Filme> getFilmes() {
         List<Filme> lista;
         lista = filme.buscarTodos();
         return lista;
     }
-    
-//    public List<Sala> getSalas() {
-//        List<Sala> lista;
-//        lista = sala.getSalas();
-//        return lista;
-//    }
-//    
-//    public List<Horario> getHorarios() {
-//        List<Horario> lista;
-//        lista = horario.getHorarios();
-//        return lista;
-//    }
-    
-    
 }

@@ -33,7 +33,7 @@ public class HorarioDAODerby implements HorarioDAO{
             try (Statement comando = conexao.createStatement()) {
                 try (ResultSet resultado = comando.executeQuery(sql)) {
                     while (resultado.next()) {
-                        Horario horario = new Horario( resultado.getString("inicio"),
+                        Horario horario = new Horario( resultado.getInt("id"),resultado.getString("inicio"),
                                 resultado.getString("fim"));
                         horarios.add(horario);
                     }

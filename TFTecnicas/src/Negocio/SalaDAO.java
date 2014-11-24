@@ -13,4 +13,5 @@ import java.util.List;
  */
 public interface SalaDAO {
     public List<Sala> getSalas();
+
 }

@@ -4,58 +4,52 @@
  */
 package Negocio;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  *
  * @author Indy
  */
 public class Sessao {
-    private Filme filme;
-    private Sala sala;
-    private Date dia;
-    private Horario horario;
+
+    
+    private int capacidade;
+    private int idFilme;
+    private int idSala;
+    private String dia;
+    private int idHorario;
     private double valorIntegral;
 
-    public Sessao(Filme filme, Sala sala, Date dia, Horario horario, double valorIntegral) {
-        this.filme = filme;
-        this.sala = sala;
+    public Sessao( String dia, int capacidade, double valorIntegral, int idSala, int idHorario, int idFilme) {
+      
         this.dia = dia;
-        this.horario = horario;
         this.valorIntegral = valorIntegral;
+        this.idSala = idSala;
+        this.idHorario = idHorario;
+        this.idFilme = idFilme;
+        this.capacidade = capacidade;
+
     }
 
-    public Filme getFilme() {
-        return filme;
-    }
-
-    public void setFilme(Filme filme) {
-        this.filme = filme;
-    }
-
-    public Sala getSala() {
-        return sala;
-    }
-
-    public void setSala(Sala sala) {
-        this.sala = sala;
-    }
-
-    public Date getDia() {
+    public String getDia() {
         return dia;
     }
 
-    public void setDia(Date dia) {
+    public void setDia(String dia) {
         this.dia = dia;
     }
 
-    public Horario getHorario() {
-        return horario;
+    public int getCapacidade() {
+        return capacidade;
     }
 
-    public void setHorario(Horario horario) {
-        this.horario = horario;
+    public void setCapacidade(int capacidade) {
+        this.capacidade = capacidade;
     }
+
+   
+
+    
 
     public double getValorIntegral() {
         return valorIntegral;
@@ -65,8 +59,36 @@ public class Sessao {
         this.valorIntegral = valorIntegral;
     }
 
+    public int getIdFilme() {
+        return idFilme;
+    }
+
+    public void setIdFilme(int idFilme) {
+        this.idFilme = idFilme;
+    }
+
+    public int getIdSala() {
+        return idSala;
+    }
+
+    public void setIdSala(int idSala) {
+        this.idSala = idSala;
+    }
+
+    public int getIdHorario() {
+        return idHorario;
+    }
+
+    public void setIdHorario(int idHorario) {
+        this.idHorario = idHorario;
+    }
+
     @Override
     public String toString() {
-        return "Sessao{" + "filme=" + filme + ", sala=" + sala + ", dia=" + dia + ", horario=" + horario + ", valorIntegral=" + valorIntegral + '}';
+        return "Sessao{" + "capacidade=" + capacidade + ", idFilme=" + idFilme + ", idSala=" + idSala + ", dia=" + dia + ", idHorario=" + idHorario + ", valorIntegral=" + valorIntegral + '}';
     }
+
+    
+
+   
 }

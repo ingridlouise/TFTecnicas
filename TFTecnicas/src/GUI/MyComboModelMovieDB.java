@@ -47,6 +47,10 @@ public class MyComboModelMovieDB implements ComboBoxModel<String> {
     public String getElementAt(int index) {
         return comboFilmes.get(index).getTitle();
     }
+    
+    public int getElemenAtId(int index){
+        return comboFilmes.get(index).getId();
+    }
 
     @Override
     public void addListDataListener(ListDataListener l) {

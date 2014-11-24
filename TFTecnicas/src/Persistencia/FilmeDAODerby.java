@@ -33,7 +33,7 @@ public class FilmeDAODerby implements FilmeDAO {
         int resultado = 0;
         try (Connection conexao = InicializadorBancoDados.conectarBd()) {
             try (PreparedStatement comando = conexao.prepareStatement(sql)) {
-                comando.setLong(1, filme.getId());
+                comando.setInt(1, filme.getId());
                 comando.setString(2, filme.getNome());
                 comando.setString(3, filme.getPoster());
                 comando.setInt(4, filme.getAnoLancamento());

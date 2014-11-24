@@ -9,6 +9,19 @@ package Negocio;
  *
  * @author ingridlouisepanizzirodrigues
  */
-public class DAOSessaoException {
+public class DAOSessaoException extends Exception{
+    
+    
+    public DAOSessaoException(){
+        super();
+    }
+    
+    public DAOSessaoException(String mensagem) {
+        super(mensagem);
+    }
+    
+    public DAOSessaoException(String mensagem, Throwable causa) {
+        super(mensagem, causa);
+    }
     
 }

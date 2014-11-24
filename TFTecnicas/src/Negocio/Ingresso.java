@@ -20,6 +20,10 @@ public class Ingresso {
         this.sala = sala;
         this.cadeira = cadeira;
     }
+    
+    public Ingresso(double valor){
+        this.valorPago = valor;
+    }
 
     public double getValor() {
         return valorPago;
