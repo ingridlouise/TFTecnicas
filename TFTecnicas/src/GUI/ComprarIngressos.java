@@ -7,11 +7,20 @@ package GUI;
 
 import Negocio.FachadaServicoTmdb;
 import Negocio.FachadaServicoTmdbException;
+import Negocio.FachadaSessao;
 import Negocio.Filme;
 import Negocio.FilmeDAO;
+import Negocio.Horario;
+import Negocio.Sala;
+import Persistencia.HorarioDAODerby;
+import Persistencia.SalaDAODerby;
+import com.omertron.themoviedbapi.TheMovieDbApi;
 import com.omertron.themoviedbapi.model.MovieDb;
 import static java.awt.image.ImageObserver.WIDTH;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,11 +29,24 @@ import javax.swing.JOptionPane;
  */
 public class ComprarIngressos extends javax.swing.JFrame {
 
+   
+    String chave = "7f33d776068a7e8045c703100347fd69";
+    MyComboModelFilme comboFilmes;
+    MyComboModelSalas comboSalas;
+    MyComboModelHorarios comboHorarios;
+    FachadaSessao fachadaSessao;
+    FachadaServicoTmdb fachada;
+    FilmeDAO filmeDAOFilmes;
+    SalaDAODerby salaDAOFilmes = new SalaDAODerby();
+    HorarioDAODerby horarioDAOFilmes = new HorarioDAODerby();
+
     /**
      * Creates new form ComprarIngressos
      */
-    public ComprarIngressos() {
+    public ComprarIngressos() throws FachadaServicoTmdbException {
         initComponents();
+        fachada = new FachadaServicoTmdb(chave);
+        fachadaSessao = new FachadaSessao();
     }
 
     /**
@@ -36,61 +58,81 @@ public class ComprarIngressos extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jComboBox1 = new javax.swing.JComboBox();
-        jButton1 = new javax.swing.JButton();
-        jComboBox2 = new javax.swing.JComboBox();
-        jButton2 = new javax.swing.JButton();
-        jComboBox3 = new javax.swing.JComboBox();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jComboBox4 = new javax.swing.JComboBox();
-        jTextField1 = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
+        ddlFilmes = new javax.swing.JComboBox();
+        btnInfoFilme = new javax.swing.JButton();
+        ddlSessoes = new javax.swing.JComboBox();
+        lblFilmes = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        lblBuscar = new javax.swing.JLabel();
+        lblNome = new javax.swing.JLabel();
+        lblData = new javax.swing.JLabel();
+        txtNome = new javax.swing.JTextField();
+        txtData = new javax.swing.JTextField();
+        jSeparator2 = new javax.swing.JSeparator();
+        lblSessoes = new javax.swing.JLabel();
+        jSeparator3 = new javax.swing.JSeparator();
+        jLabel3 = new javax.swing.JLabel();
+        btnBuscarFilme = new javax.swing.JButton();
+        btnBuscarSessao = new javax.swing.JButton();
+        btnEscolherSessao = new javax.swing.JButton();
+        btnCarregarFilmes = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        ddlFilmes.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione" }));
+        ddlFilmes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                ddlFilmesActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Visualizar Sessões");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnInfoFilme.setText("Ver Informações do Filme");
+        btnInfoFilme.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnInfoFilmeActionPerformed(evt);
             }
         });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+        ddlSessoes.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione" }));
+        ddlSessoes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
+                ddlSessoesActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Comprar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        lblFilmes.setText("Filmes em cartaz:");
+
+        lblBuscar.setText("Buscar Filme:");
+
+        lblNome.setText("Por Nome:");
+
+        lblData.setText("Por Data:");
+
+        txtNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                txtNomeActionPerformed(evt);
             }
         });
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tipo de Desconto", "Menor", "Idoso", "Pacote" }));
+        lblSessoes.setText("Sessões:");
 
-        jLabel1.setText("Tipo de Ingresso");
+        jLabel3.setText("Comprar Ingressos:");
 
-        jLabel2.setText("Cadeira");
-
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jTextField1.setText("jTextField1");
-
-        jButton3.setText("Calcular Valor");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscarFilme.setText("Buscar");
+        btnBuscarFilme.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnBuscarFilmeActionPerformed(evt);
+            }
+        });
+
+        btnBuscarSessao.setText("Buscar Sessão");
+
+        btnEscolherSessao.setText("Escolher Sessão");
+
+        btnCarregarFilmes.setText("Carregar Filmes em Cartaz");
+        btnCarregarFilmes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCarregarFilmesActionPerformed(evt);
             }
         });
 
@@ -98,80 +140,134 @@ public class ComprarIngressos extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSeparator1)
+            .addComponent(jSeparator2)
+            .addComponent(jSeparator3)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblNome)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1))
+                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addComponent(lblData)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtData))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(54, 54, 54)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jButton2)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(lblSessoes)
+                                .addGap(18, 18, 18)
+                                .addComponent(ddlSessoes, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnBuscarSessao)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnEscolherSessao))
+                            .addComponent(lblBuscar)
+                            .addComponent(jLabel3)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(lblFilmes)
+                                .addGap(18, 18, 18)
+                                .addComponent(ddlFilmes, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(29, 29, 29)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnCarregarFilmes)
+                                    .addComponent(btnInfoFilme))))
+                        .addGap(0, 27, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnBuscarFilme)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(61, 61, 61)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3))
+                    .addComponent(lblFilmes)
+                    .addComponent(ddlFilmes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCarregarFilmes))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addComponent(btnInfoFilme)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblBuscar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNome)
+                    .addComponent(lblData)
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addComponent(btnBuscarFilme)
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSessoes)
+                    .addComponent(ddlSessoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarSessao)
+                    .addComponent(btnEscolherSessao))
+                .addGap(24, 24, 24)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addContainerGap(143, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+    private void ddlSessoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ddlSessoesActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox2ActionPerformed
+    }//GEN-LAST:event_ddlSessoesActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void ddlFilmesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ddlFilmesActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_ddlFilmesActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void btnInfoFilmeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoFilmeActionPerformed
+        if (ddlFilmes != null) {
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+            Filme filmeSelecionado = comboFilmes.getInfosFilme(ddlFilmes.getSelectedIndex());
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+            String nomeFilme = filmeSelecionado.getNome();
+            String diretor = filmeSelecionado.getDiretor();
+            int ano = filmeSelecionado.getAnoLancamento();
+            String sinopse = filmeSelecionado.getSinopse();
+            String[] atores = filmeSelecionado.getAtores();
+            InformacoesFilme info = null;
+
+            info = new InformacoesFilme(nomeFilme, sinopse, diretor, ano, atores);
+
+            info.setVisible(true);
+
+        }
+    }//GEN-LAST:event_btnInfoFilmeActionPerformed
+
+    private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_txtNomeActionPerformed
+
+    private void btnBuscarFilmeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarFilmeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscarFilmeActionPerformed
+
+    private void btnCarregarFilmesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarregarFilmesActionPerformed
+        List<Filme> filmes = fachada.getFilmes();
+
+
+        if (filmes.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhum filme encontrado", "Erro", WIDTH, null);
+        } else {
+            comboFilmes = new MyComboModelFilme(filmes);
+            ddlFilmes.removeAllItems();
+            ddlFilmes.setModel(comboFilmes);
+
+        }
+    }//GEN-LAST:event_btnCarregarFilmesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -203,21 +299,32 @@ public class ComprarIngressos extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ComprarIngressos().setVisible(true);
+                try {
+                    new ComprarIngressos().setVisible(true);
+                } catch (FachadaServicoTmdbException ex) {
+                    Logger.getLogger(ComprarIngressos.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
-    private javax.swing.JComboBox jComboBox3;
-    private javax.swing.JComboBox jComboBox4;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton btnBuscarFilme;
+    private javax.swing.JButton btnBuscarSessao;
+    private javax.swing.JButton btnCarregarFilmes;
+    private javax.swing.JButton btnEscolherSessao;
+    private javax.swing.JButton btnInfoFilme;
+    private javax.swing.JComboBox ddlFilmes;
+    private javax.swing.JComboBox ddlSessoes;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JLabel lblBuscar;
+    private javax.swing.JLabel lblData;
+    private javax.swing.JLabel lblFilmes;
+    private javax.swing.JLabel lblNome;
+    private javax.swing.JLabel lblSessoes;
+    private javax.swing.JTextField txtData;
+    private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables
 }
